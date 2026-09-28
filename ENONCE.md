@@ -220,10 +220,10 @@ Faites les étapes **dans l'ordre** : chacune s'appuie sur la précédente.
 
 ### Étape 1 — Mise en place
 
-- [ ] Fournir `HttpClient` dans `app.config.ts`.
-- [ ] Générer deux composants « pages » : `LoginPage` et `CaissePage`.
-- [ ] Déclarer les routes : `/login`, `/caisse`. L'URL vide et toute URL inconnue redirigent vers `/caisse`.
-- [ ] Supprimer le message d'accueil de `app.ts`.
+- [X] Fournir `HttpClient` dans `app.config.ts`.
+- [X] Générer deux composants « pages » : `LoginPage` et `CaissePage`.
+- [X] Déclarer les routes : `/login`, `/caisse`. L'URL vide et toute URL inconnue redirigent vers `/caisse`.
+- [X] Supprimer le message d'accueil de `app.ts`.
 
 ✅ **Validation** : http://localhost:4200/login et http://localhost:4200/caisse affichent chacune leur page.
 
