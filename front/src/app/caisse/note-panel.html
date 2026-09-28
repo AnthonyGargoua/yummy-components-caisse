@@ -1,0 +1,25 @@
+<div class="card">
+    <h2>Note en cours</h2>
+
+    @for (line of note.lines(); track line.product.id) {
+        <div class="note-line">
+            <span>{{ line.product.name }}</span>
+            <button type="button" class="btn-icon" (click)="note.decrease(line.product.id)">−</button>
+            <span>{{ line.quantity }}</span>
+            <button
+                    type="button"
+                    class="btn-icon"
+                    [disabled]="line.quantity >= line.product.stock"
+                    (click)="note.add(line.product)"
+            >
+                +
+            </button>
+            <span>{{ line.product.price * line.quantity | euros }}</span>
+            <button type="button" class="btn-icon" (click)="note.remove(line.product.id)">✕</button>
+        </div>
+    } @empty {
+        <p>Aucun produit pour l'instant.</p>
+    }
+
+    <p><strong>Total : {{ note.total() | euros }}</strong></p>
+</div>

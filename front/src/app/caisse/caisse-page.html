@@ -6,8 +6,14 @@
 
         <div class="product-grid">
             @for (product of productsIn(category.code); track product.id) {
-                <app-product-card [product]="product" [available]="product.stock" />
+                <app-product-card
+                        [product]="product"
+                        [available]="availableFor(product)"
+                        (picked)="note.add($event)"
+                />
             }
         </div>
     </section>
 }
+
+<app-note-panel />
