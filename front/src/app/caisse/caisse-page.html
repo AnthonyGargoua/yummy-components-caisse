@@ -1,1 +1,13 @@
-<p>caisse-page works!</p>
+<h1>Caisse</h1>
+
+@for (category of categories; track category.code) {
+    <section>
+        <h2>{{ category.icon }} {{ category.label }}</h2>
+
+        <div class="product-grid">
+            @for (product of productsIn(category.code); track product.id) {
+                <app-product-card [product]="product" [available]="product.stock" />
+            }
+        </div>
+    </section>
+}

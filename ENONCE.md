@@ -252,15 +252,15 @@ après un redémarrage du serveur, la première requête renvoie sur `/login`.
 
 ### Étape 3 — Le catalogue
 
-- [ ] **`CatalogService`** : `getProducts()` et `getFormulas()`.
-- [ ] Un **pipe `euros`** qui transforme des centimes en texte : `{{ 850 | euros }}` → `8,50 €`.
-- [ ] La page caisse charge les produits dans un `signal` et les affiche **par catégorie**
+- [X] **`CatalogService`** : `getProducts()` et `getFormulas()`.
+- [X] Un **pipe `euros`** qui transforme des centimes en texte : `{{ 850 | euros }}` → `8,50 €`.
+- [X] La page caisse charge les produits dans un `signal` et les affiche **par catégorie**
   (Burgers, Paninis, Boissons, Desserts), à l'aide de `CATEGORIES`.
 - [ ] Un composant **`ProductCard`** :
   - entrées (`input()`) : le produit et le **stock disponible** ;
   - sortie (`output()`) : émet le produit quand on clique dessus ;
   - affiche l'icône, le nom, le prix et le stock.
-- [ ] Un produit **hors stock** reste **visible** mais est **grisé**, porte la mention « Hors stock » et
+- [X] Un produit **hors stock** reste **visible** mais est **grisé**, porte la mention « Hors stock » et
   **n'est pas cliquable**.
 
 ✅ **Validation** : les 15 produits s'affichent ; Veggie Burger, Panini Poulet-Pesto et Tiramisu sont

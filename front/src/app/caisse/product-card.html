@@ -1,0 +1,10 @@
+<button type="button" class="card" [class.sold-out]="soldOut()" [disabled]="soldOut()" (click)="onClick()">
+    <span>{{ icon() }}</span>
+    <span>{{ product().name }}</span>
+    <span>{{ product().price | euros }}</span>
+    @if (soldOut()) {
+        <span class="badge badge-danger">Hors stock</span>
+    } @else {
+        <span class="badge">Stock : {{ available() }}</span>
+    }
+</button>

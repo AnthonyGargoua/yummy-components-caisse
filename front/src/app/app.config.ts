@@ -16,6 +16,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
     { provide: LOCALE_ID, useValue: 'fr' },
-    // TODO étape 2 : brancher l'intercepteur d'authentification
   ],
 };
