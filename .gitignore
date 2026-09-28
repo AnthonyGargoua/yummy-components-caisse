@@ -1,0 +1,15 @@
+# Serveur Java
+target/
+yummy.db
+*.db-journal
+
+# IDE
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+
+# Front (chaque projet Angular a aussi son propre .gitignore)
+node_modules/
+dist/
+.angular/
