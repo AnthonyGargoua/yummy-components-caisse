@@ -1,1 +1,23 @@
-<p>login-page works!</p>
+<div class="card">
+    <h1>Connexion</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-field">
+            <label for="login">Identifiant</label>
+            <input id="login" type="text" formControlName="login"/>
+        </div>
+
+        <div class="form-field">
+            <label for="password">Mot de passe</label>
+            <input id="password" type="password" formControlName="password"/>
+        </div>
+
+        @if (errorMessage()) {
+            <p class="alert alert-error">{{ errorMessage() }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitting()">
+        Se connecter
+        </button>
+    </form>
+</div>
