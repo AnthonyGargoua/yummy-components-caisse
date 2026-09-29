@@ -1,23 +1,31 @@
-<div class="card">
-    <h1>Connexion</h1>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="form-field">
-            <label for="login">Identifiant</label>
-            <input id="login" type="text" formControlName="login"/>
+<div class="login-page">
+    <div class="login-card card">
+        <div class="login-logo">
+            <span class="logo-badge">🍔</span>
+            <div>
+                <h1>YummyComponents</h1>
+                <p class="login-subtitle">Caisse enregistreuse du food truck</p>
+            </div>
         </div>
 
-        <div class="form-field">
-            <label for="password">Mot de passe</label>
-            <input id="password" type="password" formControlName="password"/>
-        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-field">
+                <label for="login">Identifiant</label>
+                <input id="login" type="text" formControlName="login" autocomplete="username" />
+            </div>
 
-        @if (errorMessage()) {
-            <p class="alert alert-error">{{ errorMessage() }}</p>
-        }
+            <div class="form-field">
+                <label for="password">Mot de passe</label>
+                <input id="password" type="password" formControlName="password" autocomplete="current-password" />
+            </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitting()">
-        Se connecter
-        </button>
-    </form>
+            @if (errorMessage()) {
+                <p class="alert alert-error">{{ errorMessage() }}</p>
+            }
+
+            <button type="submit" class="btn btn-primary btn-lg login-submit" [disabled]="form.invalid || submitting()">
+                Se connecter
+            </button>
+        </form>
+    </div>
 </div>

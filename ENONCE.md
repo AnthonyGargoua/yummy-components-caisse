@@ -354,7 +354,7 @@ le serveur (401).
 - [X] Le message de confirmation de paiement disparaît tout seul après quelques secondes.
 - [X] Afficher le **ticket** de la dernière note payée (les `lines` renvoyées par `POST /api/orders`).
 - [X] Un bouton d'administration qui appelle `POST /api/reset` puis recharge la page.
-- Une mise en page qui reste utilisable sur mobile.
+- [X] Une mise en page qui reste utilisable sur mobile.
 - Des tests unitaires du `NoteService`.
 
 ---

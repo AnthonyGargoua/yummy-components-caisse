@@ -1,21 +1,17 @@
-<div class="card">
+<div class="card daily-totals">
     <h2>📅 Recettes par jour</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Jour</th>
-            <th>Notes</th>
-            <th>Total</th>
-        </tr>
-        </thead>
-        <tbody>
-            @for (dayTotal of totals(); track dayTotal.day) {
-                <tr [class.today]="dayTotal.day === today">
-                    <td>{{ dayTotal.day | date: 'EEEE d MMMM' }}</td>
-                    <td>{{ dayTotal.orderCount }}</td>
-                    <td>{{ dayTotal.total | euros }}</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    <div class="daily-totals__list">
+        @for (dayTotal of totals(); track dayTotal.day) {
+            <div class="daily-totals__row" [class.today]="dayTotal.day === today">
+                <div class="daily-totals__day">
+                    <span class="daily-totals__date">{{ dayTotal.day | date: 'EEEE d MMMM' }}</span>
+                    <span class="daily-totals__count">{{ dayTotal.orderCount }} note(s)</span>
+                </div>
+                <span class="daily-totals__total">{{ dayTotal.total | euros }}</span>
+            </div>
+        } @empty {
+            <p class="note-empty">Aucune recette pour l'instant.</p>
+        }
+    </div>
 </div>

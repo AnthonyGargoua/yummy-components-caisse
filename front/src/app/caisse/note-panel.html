@@ -1,40 +1,63 @@
-<div class="card">
-    <h2>Note en cours</h2>
+<div class="card note-panel">
+    <h2>🧾 Note en cours</h2>
 
-    @for (line of note.lines(); track line) {
-        <div class="note-line">
-            @if (line.kind === 'product') {
-                <span>{{ line.product.name }}</span>
-                <button type="button" class="btn-icon" (click)="note.decreaseProduct(line.product.id)">−</button>
-                <span>{{ line.quantity }}</span>
+    <div class="note-lines">
+        @for (line of note.lines(); track line) {
+            <div class="note-line">
+                @if (line.kind === 'product') {
+                    <div class="note-line__info">
+                        <span class="note-line__name">{{ line.product.name }}</span>
+                        <span class="note-line__price">{{ line.product.price * line.quantity | euros }}</span>
+                    </div>
+                    <div class="note-line__qty">
+                        <button type="button" class="btn-icon" (click)="note.decreaseProduct(line.product.id)">−
+                        </button>
+                        <span>{{ line.quantity }}</span>
+                        <button
+                                type="button"
+                                class="btn-icon"
+                                [disabled]="line.quantity >= line.product.stock"
+                                (click)="note.addProduct(line.product)"
+                        >
+                            +
+                        </button>
+                    </div>
+                } @else {
+                    <div class="note-line__info">
+                        <span class="note-line__name">⭐ {{ line.formula.name }}</span>
+                        <span class="note-line__detail">{{ line.main.name }} · {{ line.drink.name }}
+                            · {{ line.dessert.name }}</span>
+                    </div>
+                    <span class="note-line__price">{{ line.formula.price | euros }}</span>
+                }
                 <button
                         type="button"
-                        class="btn-icon"
-                        [disabled]="line.quantity >= line.product.stock"
-                        (click)="note.addProduct(line.product)"
+                        class="btn-icon note-line__remove"
+                        (click)="note.remove($index)"
+                        aria-label="Supprimer cette ligne"
                 >
-                    +
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
                 </button>
-                <span>{{ line.product.price * line.quantity | euros }}</span>
-            } @else {
-                <span>⭐ {{ line.formula.name }}</span>
-                <span>{{ line.main.name }} · {{ line.drink.name }} · {{ line.dessert.name }}</span>
-                <span>{{ line.formula.price | euros }}</span>
-            }
-            <button type="button" class="btn-icon" (click)="note.remove($index)">✕</button>
-        </div>
-    } @empty {
-        <p>Aucun produit pour l'instant.</p>
-    }
+            </div>
+        } @empty {
+            <p class="note-empty">Ta note est vide pour l'instant.</p>
+        }
+    </div>
 
-    <p><strong>Total : {{ note.total() | euros }}</strong></p>
+    <div class="note-total">
+        <span>Total</span>
+        <strong>{{ note.total() | euros }}</strong>
+    </div>
 
     <button
-        type="button"
-        class="btn-success btn-lg"
-        [disabled]="note.lines().length === 0 || paying()"
-        (click)="payClicked.emit()"
-        >
+            type="button"
+            class="btn btn-success btn-lg note-pay"
+            [disabled]="note.lines().length === 0 || paying()"
+            (click)="payClicked.emit()"
+    >
         Payer {{ note.total() | euros }}
     </button>
 </div>

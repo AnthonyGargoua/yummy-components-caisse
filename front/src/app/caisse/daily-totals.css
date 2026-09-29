@@ -1,3 +1,40 @@
-.today {
+.daily-totals__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+}
+
+.daily-totals__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+}
+
+.daily-totals__row.today {
+    background: var(--color-primary-light);
+}
+
+.daily-totals__day {
+    display: flex;
+    flex-direction: column;
+}
+
+.daily-totals__date {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+}
+
+.daily-totals__count {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+}
+
+.daily-totals__total {
     font-weight: 700;
+    color: var(--color-primary-dark);
 }

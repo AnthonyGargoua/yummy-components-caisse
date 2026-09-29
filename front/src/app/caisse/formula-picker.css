@@ -1,21 +1,71 @@
 .modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgb(0 0 0 / 0.5);
+    background: rgb(15 23 15 / 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    z-index: 50;
 }
 
 .modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     max-width: 600px;
-    max-height: 90vh;
+    max-height: 85vh;
+    padding: 0;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    flex-shrink: 0;
+    padding: 1.3rem 1.3rem 0.5rem;
+}
+
+.modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
+    padding: 0 1.3rem;
+}
+
+.modal-body h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin-top: 1.1rem;
+    margin-bottom: 0.6rem;
 }
 
 .option-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
+}
+
+.option-grid button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    min-width: 130px;
+    border: 1.5px solid var(--color-border);
+}
+
+.option-grid button.selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+.modal-actions {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding: 1rem 1.3rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
 }

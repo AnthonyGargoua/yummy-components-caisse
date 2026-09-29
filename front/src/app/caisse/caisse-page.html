@@ -1,57 +1,73 @@
-<header>
-    <h1>Caisse</h1>
-    <span>Total du jour : {{ todayTotal() | euros }}</span>
-    <button type="button" class="btn" (click)="logout()">Se déconnecter</button>
-    <button type="button" class="btn btn-ghost" (click)="resetDatabase()">🔄 Réinitialiser (admin)</button>
+<header class="app-header">
+    <div class="app-header__brand">
+        <span class="logo-badge">🍔</span>
+        <span class="app-header__name">YummyComponents</span>
+    </div>
+
+    <div class="app-header__today">
+        <span class="app-header__today-label">Total du jour</span>
+        <span class="app-header__today-value">{{ todayTotal() | euros }}</span>
+    </div>
+
+    <div class="app-header__actions">
+        <button type="button" class="btn btn-ghost" (click)="resetDatabase()">🔄 Réinitialiser (admin)</button>
+        <button type="button" class="btn" (click)="logout()">Se déconnecter</button>
+    </div>
 </header>
 
-@for (category of categories; track category.code) {
-    <section>
-        <h2>{{ category.icon }} {{ category.label }}</h2>
+<main class="caisse-layout">
+    <div class="caisse-layout__main">
+        <section>
+            <h2>⭐ Formules</h2>
+            <div class="product-grid">
+                @for (formula of formulas(); track formula.id) {
+                    <button type="button" class="card formula-card" [disabled]="formulaDisabled(formula)" (click)="openPicker(formula)">
+                        <span class="formula-card__icon">⭐</span>
+                        <span class="formula-card__name">{{ formula.name }}</span>
+                        <span class="formula-card__detail">{{ mainCategoryLabel(formula) }} + boisson + dessert</span>
+                        <span class="formula-card__price">{{ formula.price | euros }}</span>
+                    </button>
+                }
+            </div>
+        </section>
 
-        <div class="product-grid">
-            @for (product of productsIn(category.code); track product.id) {
-                <app-product-card
-                        [product]="product"
-                        [available]="note.availableStock(product)"
-                        (picked)="note.addProduct($event)"
-                />
-            }
-        </div>
-    </section>
-
-    <section>
-        <h2>⭐ Formules</h2>
-        <div class="product-grid">
-            @for (formula of formulas(); track formula.id) {
-                <button type="button" class="card" [disabled]="formulaDisabled(formula)" (click)="openPicker(formula)">
-                    <span>{{ formula.name }}</span>
-                    <span>{{ mainCategoryLabel(formula) }} + boisson + dessert</span>
-                    <span>{{ formula.price | euros }}</span>
-                </button>
-            }
-        </div>
-    </section>
-}
-
-<app-note-panel [paying]="paying()" (payClicked)="pay()"/>
-
-@if (paidOrder(); as order) {
-    <div class="card">
-        <p class="alert alert-success">Note n°{{ order.id }} payée : {{ order.total | euros }}</p>
-        <ul>
-            @for (line of order.lines; track $index) {
-                <li>{{ line.quantity }} × {{ line.label }} — {{ line.unitPrice | euros }}</li>
-            }
-        </ul>
+        @for (category of categories; track category.code) {
+            <section>
+                <h2>{{ category.icon }} {{ category.label }}</h2>
+                <div class="product-grid">
+                    @for (product of productsIn(category.code); track product.id) {
+                        <app-product-card
+                                [product]="product"
+                                [available]="note.availableStock(product)"
+                                (picked)="note.addProduct($event)"
+                        />
+                    }
+                </div>
+            </section>
+        }
     </div>
-}
 
-@if (paymentError(); as message) {
-    <p class="alert alert-error">{{ message }}</p>
-}
+    <div class="caisse-layout__side">
+        <app-note-panel [paying]="paying()" (payClicked)="pay()"/>
 
-<app-daily-totals [totals]="dailyTotals()"/>
+        @if (paidOrder(); as order) {
+            <div class="card">
+                <p class="alert alert-success">Note n°{{ order.id }} payée : {{ order.total | euros }}</p>
+                <ul>
+                    @for (line of order.lines; track $index) {
+                        <li>{{ line.quantity }} × {{ line.label }} — {{ line.unitPrice | euros }}</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if (paymentError(); as message) {
+            <p class="alert alert-error">{{ message }}</p>
+        }
+
+        <app-daily-totals [totals]="dailyTotals()"/>
+    </div>
+</main>
 
 @if (openFormula(); as formula) {
     <app-formula-picker
