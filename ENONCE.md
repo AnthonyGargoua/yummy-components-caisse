@@ -256,7 +256,7 @@ après un redémarrage du serveur, la première requête renvoie sur `/login`.
 - [X] Un **pipe `euros`** qui transforme des centimes en texte : `{{ 850 | euros }}` → `8,50 €`.
 - [X] La page caisse charge les produits dans un `signal` et les affiche **par catégorie**
   (Burgers, Paninis, Boissons, Desserts), à l'aide de `CATEGORIES`.
-- [ ] Un composant **`ProductCard`** :
+- [X] Un composant **`ProductCard`** :
   - entrées (`input()`) : le produit et le **stock disponible** ;
   - sortie (`output()`) : émet le produit quand on clique dessus ;
   - affiche l'icône, le nom, le prix et le stock.
@@ -273,14 +273,14 @@ visibles mais désactivés.
 
 La note est construite **dans le navigateur** : rien n'est envoyé au serveur avant le paiement.
 
-- [ ] **`NoteService`** (état partagé, avec des signals) :
+- [X] **`NoteService`** (état partagé, avec des signals) :
   - la liste des lignes de la note ;
   - `total` : un `computed` ;
   - ajouter un produit (cliquer deux fois sur le même produit donne **une** ligne de quantité 2) ;
   - diminuer la quantité, supprimer une ligne, vider la note.
-- [ ] Un composant **`NotePanel`** (le ticket) : chaque ligne avec son libellé, son prix, sa quantité
+- [X] Un composant **`NotePanel`** (le ticket) : chaque ligne avec son libellé, son prix, sa quantité
   (boutons − et +), son sous-total et un bouton de suppression ; le total en bas.
-- [ ] Le **stock affiché tient compte de la note** : si Cookie a un stock de 2 et que 2 cookies sont
+- [X] Le **stock affiché tient compte de la note** : si Cookie a un stock de 2 et que 2 cookies sont
   déjà dans la note, la carte Cookie affiche « Hors stock » et n'est plus cliquable. Le bouton « + »
   du ticket est désactivé dans ce cas.
 
@@ -294,15 +294,15 @@ pas mettre dans la note plus que le stock.
 
 ### Étape 5 — Les formules
 
-- [ ] Afficher les 2 formules (nom, composition, prix) au-dessus du catalogue.
-- [ ] Un clic sur une formule ouvre un composant **`FormulaPicker`** (une fenêtre par-dessus la page) :
+- [X] Afficher les 2 formules (nom, composition, prix) au-dessus du catalogue.
+- [X] Un clic sur une formule ouvre un composant **`FormulaPicker`** (une fenêtre par-dessus la page) :
   - choisir **un** produit de la catégorie principale (burger **ou** panini selon la formule),
     **une** boisson et **un** dessert ;
   - les produits indisponibles sont visibles mais non sélectionnables ;
   - « Ajouter à la note » n'est actif que lorsque les 3 choix sont faits ; « Annuler » ferme la fenêtre.
-- [ ] Dans la note, une formule est **une ligne** : son nom, le détail des 3 produits choisis et son prix fixe.
-- [ ] Les 3 produits d'une formule **comptent dans les stocks** réservés par la note.
-- [ ] Une formule est désactivée si l'une de ses 3 catégories n'a plus aucun produit disponible.
+- [X] Dans la note, une formule est **une ligne** : son nom, le détail des 3 produits choisis et son prix fixe.
+- [X] Les 3 produits d'une formule **comptent dans les stocks** réservés par la note.
+- [X] Une formule est désactivée si l'une de ses 3 catégories n'a plus aucun produit disponible.
 
 ✅ **Validation** : Formule Burger (Bacon Burger, Limonade, Brownie) apparaît dans la note à 13,50 € et
 les stocks affichés de ces 3 produits diminuent de 1.

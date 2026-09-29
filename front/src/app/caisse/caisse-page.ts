@@ -1,13 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 
-import { CATEGORIES, Product } from '../models';
+import { CATEGORIES, Formula, Product } from '../models';
 import { CatalogService } from '../services/catalog.service';
-import { ProductCard } from './product-card';
 import { NoteService } from '../services/note.service';
+import { FormulaPicker } from './formula-picker';
 import { NotePanel } from './note-panel';
+import { ProductCard } from './product-card';
+import { EurosPipe } from '../shared/euros-pipe';
 
 @Component({
-  imports: [ProductCard, NotePanel],
+  imports: [ProductCard, NotePanel, FormulaPicker, EurosPipe],
   templateUrl: './caisse-page.html',
   styleUrl: './caisse-page.css',
 })
@@ -17,20 +19,47 @@ export class CaissePage {
 
   protected readonly categories = CATEGORIES;
   protected readonly products = signal<Product[]>([]);
+  protected readonly formulas = signal<Formula[]>([]);
+  protected readonly openFormula = signal<Formula | null>(null);
 
   constructor() {
-    this.loadProducts();
+    void this.loadProducts();
+    void this.loadFormulas();
   }
 
   protected async loadProducts(): Promise<void> {
     this.products.set(await this.catalog.getProducts());
   }
 
+  protected async loadFormulas(): Promise<void> {
+    this.formulas.set(await this.catalog.getFormulas());
+  }
+
   protected productsIn(category: string): Product[] {
     return this.products().filter((p) => p.category === category);
   }
 
-  protected availableFor(product: Product): number {
-    return product.stock - (this.note.quantityByProduct().get(product.id) ?? 0);
+  protected openPicker(formula: Formula): void {
+    this.openFormula.set(formula);
+  }
+
+  protected onFormulaConfirmed(
+    formula: Formula,
+    choice: { main: Product; drink: Product; dessert: Product },
+  ): void {
+    this.note.addFormula(formula, choice.main, choice.drink, choice.dessert);
+    this.openFormula.set(null);
+  }
+
+  protected formulaDisabled(formula: Formula): boolean {
+    const hasAvailable = (category: string) =>
+      this.products().some((p) => p.category === category && this.note.availableStock(p) > 0);
+    return (
+      !hasAvailable(formula.mainCategory) || !hasAvailable('BOISSON') || !hasAvailable('DESSERT')
+    );
+  }
+
+  protected mainCategoryLabel(formula: Formula): string {
+    return CATEGORIES.find((c) => c.code === formula.mainCategory)?.label ?? '';
   }
 }

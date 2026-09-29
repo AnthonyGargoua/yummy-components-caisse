@@ -1,21 +1,27 @@
 <div class="card">
     <h2>Note en cours</h2>
 
-    @for (line of note.lines(); track line.product.id) {
+    @for (line of note.lines(); track line) {
         <div class="note-line">
-            <span>{{ line.product.name }}</span>
-            <button type="button" class="btn-icon" (click)="note.decrease(line.product.id)">−</button>
-            <span>{{ line.quantity }}</span>
-            <button
-                    type="button"
-                    class="btn-icon"
-                    [disabled]="line.quantity >= line.product.stock"
-                    (click)="note.add(line.product)"
-            >
-                +
-            </button>
-            <span>{{ line.product.price * line.quantity | euros }}</span>
-            <button type="button" class="btn-icon" (click)="note.remove(line.product.id)">✕</button>
+            @if (line.kind === 'product') {
+                <span>{{ line.product.name }}</span>
+                <button type="button" class="btn-icon" (click)="note.decreaseProduct(line.product.id)">−</button>
+                <span>{{ line.quantity }}</span>
+                <button
+                        type="button"
+                        class="btn-icon"
+                        [disabled]="line.quantity >= line.product.stock"
+                        (click)="note.addProduct(line.product)"
+                >
+                    +
+                </button>
+                <span>{{ line.product.price * line.quantity | euros }}</span>
+            } @else {
+                <span>⭐ {{ line.formula.name }}</span>
+                <span>{{ line.main.name }} · {{ line.drink.name }} · {{ line.dessert.name }}</span>
+                <span>{{ line.formula.price | euros }}</span>
+            }
+            <button type="button" class="btn-icon" (click)="note.remove($index)">✕</button>
         </div>
     } @empty {
         <p>Aucun produit pour l'instant.</p>

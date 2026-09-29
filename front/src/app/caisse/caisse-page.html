@@ -8,12 +8,34 @@
             @for (product of productsIn(category.code); track product.id) {
                 <app-product-card
                         [product]="product"
-                        [available]="availableFor(product)"
-                        (picked)="note.add($event)"
+                        [available]="note.availableStock(product)"
+                        (picked)="note.addProduct($event)"
                 />
+            }
+        </div>
+    </section>
+
+    <section>
+        <h2>⭐ Formules</h2>
+        <div class="product-grid">
+            @for (formula of formulas(); track formula.id) {
+                <button type="button" class="card" [disabled]="formulaDisabled(formula)" (click)="openPicker(formula)">
+                    <span>{{ formula.name }}</span>
+                    <span>{{ mainCategoryLabel(formula) }} + boisson + dessert</span>
+                    <span>{{ formula.price | euros }}</span>
+                </button>
             }
         </div>
     </section>
 }
 
 <app-note-panel />
+
+@if (openFormula(); as formula) {
+    <app-formula-picker
+            [formula]="formula"
+            [products]="products()"
+            (confirmed)="onFormulaConfirmed(formula, $event)"
+            (cancelled)="openFormula.set(null)"
+    />
+}

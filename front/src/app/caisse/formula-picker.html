@@ -1,0 +1,72 @@
+<div class="modal-backdrop">
+    <div class="card modal">
+        <h2>⭐ {{ formula().name }} — {{ formula().price | euros }}</h2>
+
+        <h3>Le plat</h3>
+        <div class="option-grid">
+            @for (product of mains(); track product.id) {
+                <button
+                        type="button"
+                        class="card"
+                        [class.selected]="selectedMain() === product"
+                        [disabled]="available(product) <= 0"
+                        (click)="selectedMain.set(product)"
+                >
+                    {{ product.name }}
+                    @if (available(product) <= 0) {
+                        <span class="badge badge-danger">Hors stock</span>
+                    } @else {
+                        <span class="badge">Stock : {{ available(product) }}</span>
+                    }
+                </button>
+            }
+        </div>
+
+        <h3>La boisson</h3>
+        <div class="option-grid">
+            @for (product of drinks(); track product.id) {
+                <button
+                        type="button"
+                        class="card"
+                        [class.selected]="selectedDrink() === product"
+                        [disabled]="available(product) <= 0"
+                        (click)="selectedDrink.set(product)"
+                >
+                    {{ product.name }}
+                    @if (available(product) <= 0) {
+                        <span class="badge badge-danger">Hors stock</span>
+                    } @else {
+                        <span class="badge">Stock : {{ available(product) }}</span>
+                    }
+                </button>
+            }
+        </div>
+
+        <h3>Le dessert</h3>
+        <div class="option-grid">
+            @for (product of desserts(); track product.id) {
+                <button
+                        type="button"
+                        class="card"
+                        [class.selected]="selectedDessert() === product"
+                        [disabled]="available(product) <= 0"
+                        (click)="selectedDessert.set(product)"
+                >
+                    {{ product.name }}
+                    @if (available(product) <= 0) {
+                        <span class="badge badge-danger">Hors stock</span>
+                    } @else {
+                        <span class="badge">Stock : {{ available(product) }}</span>
+                    }
+                </button>
+            }
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn" (click)="cancelled.emit()">Annuler</button>
+            <button type="button" class="btn btn-primary" [disabled]="!canConfirm()" (click)="confirm()">
+                Ajouter à la note
+            </button>
+        </div>
+    </div>
+</div>
