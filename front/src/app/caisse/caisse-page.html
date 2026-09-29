@@ -1,6 +1,7 @@
 <header>
     <h1>Caisse</h1>
     <span>Total du jour : {{ todayTotal() | euros }}</span>
+    <button type="button" class="btn" (click)="logout()">Se déconnecter</button>
 </header>
 
 @for (category of categories; track category.code) {

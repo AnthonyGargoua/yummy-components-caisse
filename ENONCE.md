@@ -339,7 +339,7 @@ limonades dans la note, payez 1 limonade depuis un second onglet, puis payez dan
 
 ### Étape 8 — Déconnexion
 
-- [ ] Un bouton **« Se déconnecter »** dans l'en-tête : appelle `POST /api/auth/logout`, oublie le
+- [X] Un bouton **« Se déconnecter »** dans l'en-tête : appelle `POST /api/auth/logout`, oublie le
   jeton, vide la note et revient sur `/login`.
 
 ✅ **Validation** : après déconnexion, `/caisse` renvoie vers `/login`, et l'ancien jeton est refusé par

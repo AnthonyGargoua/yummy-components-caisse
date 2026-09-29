@@ -10,6 +10,8 @@ import { EurosPipe } from '../shared/euros-pipe';
 import { OrderService } from '../services/order.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DailyTotals } from './daily-totals';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   imports: [ProductCard, NotePanel, FormulaPicker, EurosPipe, DailyTotals],
@@ -62,6 +64,15 @@ export class CaissePage {
 
   protected async loadDailyTotals(): Promise<void> {
     this.dailyTotals.set(await this.orders.getDailyTotals());
+  }
+
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
+  protected async logout(): Promise<void> {
+    await this.auth.logout();
+    this.note.clear();
+    await this.router.navigate(['/login']);
   }
 
   constructor() {
