@@ -349,11 +349,11 @@ le serveur (401).
 
 ## 5. Bonus
 
-- La page `/login` redirige vers `/caisse` si on est déjà connecté (un second guard).
-- La touche **Échap** ferme la fenêtre de choix de formule.
-- Le message de confirmation de paiement disparaît tout seul après quelques secondes.
-- Afficher le **ticket** de la dernière note payée (les `lines` renvoyées par `POST /api/orders`).
-- Un bouton d'administration qui appelle `POST /api/reset` puis recharge la page.
+- [X] La page `/login` redirige vers `/caisse` si on est déjà connecté (un second guard).
+- [X] La touche **Échap** ferme la fenêtre de choix de formule.
+- [X] Le message de confirmation de paiement disparaît tout seul après quelques secondes.
+- [X] Afficher le **ticket** de la dernière note payée (les `lines` renvoyées par `POST /api/orders`).
+- [X] Un bouton d'administration qui appelle `POST /api/reset` puis recharge la page.
 - Une mise en page qui reste utilisable sur mobile.
 - Des tests unitaires du `NoteService`.
 
@@ -363,16 +363,16 @@ le serveur (401).
 
 | Fonctionnalité | OK ? |
 |---|:---:|
-| Connexion `caisse` / `caisse`, message d'erreur sinon | ☐ |
-| `/caisse` inaccessible sans être connecté | ☐ |
-| Jeton envoyé automatiquement (intercepteur), 401 → retour au login | ☐ |
-| Produits affichés par catégorie avec prix et stock | ☐ |
-| Produit hors stock visible mais non sélectionnable | ☐ |
-| La note se construit en direct (quantités, suppression, total) | ☐ |
-| Le stock affiché tient compte de la note | ☐ |
-| Les 2 formules (plat + boisson + dessert) fonctionnent | ☐ |
-| Paiement en un clic, note vidée, stocks rechargés | ☐ |
-| Erreur 409 affichée proprement | ☐ |
-| Total de chaque jour + total du jour visibles et à jour | ☐ |
-| Déconnexion | ☐ |
-| Code découpé en composants / services ; montants manipulés en centimes (entiers) | ☐ |
+| Connexion `caisse` / `caisse`, message d'erreur sinon | X |
+| `/caisse` inaccessible sans être connecté | X |
+| Jeton envoyé automatiquement (intercepteur), 401 → retour au login | X |
+| Produits affichés par catégorie avec prix et stock | X |
+| Produit hors stock visible mais non sélectionnable | X |
+| La note se construit en direct (quantités, suppression, total) | X |
+| Le stock affiché tient compte de la note | X |
+| Les 2 formules (plat + boisson + dessert) fonctionnent | X |
+| Paiement en un clic, note vidée, stocks rechargés | X |
+| Erreur 409 affichée proprement | X |
+| Total de chaque jour + total du jour visibles et à jour | X |
+| Déconnexion | X |
+| Code découpé en composants / services ; montants manipulés en centimes (entiers) | X |

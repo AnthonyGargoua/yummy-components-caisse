@@ -8,10 +8,12 @@ import { NotePanel } from './note-panel';
 import { ProductCard } from './product-card';
 import { EurosPipe } from '../shared/euros-pipe';
 import { OrderService } from '../services/order.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DailyTotals } from './daily-totals';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { API_URL } from '../api';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   imports: [ProductCard, NotePanel, FormulaPicker, EurosPipe, DailyTotals],
@@ -73,6 +75,13 @@ export class CaissePage {
     await this.auth.logout();
     this.note.clear();
     await this.router.navigate(['/login']);
+  }
+
+  private readonly http = inject(HttpClient);
+
+  protected async resetDatabase(): Promise<void> {
+    await firstValueFrom(this.http.post(`${API_URL}/reset`, {}));
+    window.location.reload();
   }
 
   constructor() {

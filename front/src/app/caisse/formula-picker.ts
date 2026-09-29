@@ -6,6 +6,9 @@ import { EurosPipe } from '../shared/euros-pipe';
 @Component({
   imports: [EurosPipe],
   selector: 'app-formula-picker',
+  host: {
+    '(document:keydown.escape)': 'cancelled.emit()',
+  },
   styleUrl: './formula-picker.css',
   templateUrl: './formula-picker.html',
 })
