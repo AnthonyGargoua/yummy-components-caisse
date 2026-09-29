@@ -1,6 +1,6 @@
 import { computed, Service, signal } from '@angular/core';
 
-import { Formula, Product } from '../models';
+import { Formula, OrderRequest, Product } from '../models';
 
 export interface ProductLine {
   kind: 'product';
@@ -87,5 +87,25 @@ export class NoteService {
 
   clear(): void {
     this.lines.set([]);
+  }
+
+  toOrderRequest(): OrderRequest {
+    const products: OrderRequest['products'] = [];
+    const formulas: OrderRequest['formulas'] = [];
+
+    for (const line of this.lines()) {
+      if (line.kind === 'product') {
+        products.push({ productId: line.product.id, quantity: line.quantity });
+      } else {
+        formulas.push({
+          formulaId: line.formula.id,
+          mainId: line.main.id,
+          drinkId: line.drink.id,
+          dessertId: line.dessert.id,
+        });
+      }
+    }
+
+    return { products, formulas };
   }
 }

@@ -29,7 +29,14 @@
     </section>
 }
 
-<app-note-panel />
+<app-note-panel [paying]="paying()" (payClicked)="pay()" />
+
+@if (paidOrder(); as order) {
+    <p class="alert alert-success">Note n°{{ order.id }} payée : {{ order.total | euros }}</p>
+}
+@if (paymentError(); as message) {
+    <p class="alert alert-error">{{ message }}</p>
+}
 
 @if (openFormula(); as formula) {
     <app-formula-picker

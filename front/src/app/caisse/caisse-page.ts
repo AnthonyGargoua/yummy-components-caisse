@@ -1,12 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 
-import { CATEGORIES, Formula, Product } from '../models';
+import { CATEGORIES, Formula, Order, Product } from '../models';
 import { CatalogService } from '../services/catalog.service';
 import { NoteService } from '../services/note.service';
 import { FormulaPicker } from './formula-picker';
 import { NotePanel } from './note-panel';
 import { ProductCard } from './product-card';
 import { EurosPipe } from '../shared/euros-pipe';
+import { OrderService } from '../services/order.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   imports: [ProductCard, NotePanel, FormulaPicker, EurosPipe],
@@ -21,6 +23,32 @@ export class CaissePage {
   protected readonly products = signal<Product[]>([]);
   protected readonly formulas = signal<Formula[]>([]);
   protected readonly openFormula = signal<Formula | null>(null);
+
+  private readonly orders = inject(OrderService);
+
+  protected readonly paying = signal(false);
+  protected readonly paidOrder = signal<Order | null>(null);
+  protected readonly paymentError = signal<string | null>(null);
+
+  protected async pay(): Promise<void> {
+    this.paying.set(true);
+    this.paymentError.set(null);
+
+    try {
+      const order = await this.orders.pay(this.note.toOrderRequest());
+      this.paidOrder.set(order);
+      this.note.clear();
+    } catch (error) {
+      this.paymentError.set(
+        error instanceof HttpErrorResponse && error.error?.message
+          ? error.error.message
+          : 'Erreur lors du paiement, réessaie.',
+      );
+    } finally {
+      this.paying.set(false);
+      void this.loadProducts();
+    }
+  }
 
   constructor() {
     void this.loadProducts();

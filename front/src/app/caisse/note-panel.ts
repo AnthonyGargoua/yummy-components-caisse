@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { EurosPipe } from '../shared/euros-pipe';
 import { NoteService } from '../services/note.service';
 
@@ -10,4 +10,7 @@ import { NoteService } from '../services/note.service';
 })
 export class NotePanel {
   protected readonly note = inject(NoteService);
+
+  readonly paying = input(false);
+  readonly payClicked = output<void>();
 }

@@ -28,4 +28,13 @@
     }
 
     <p><strong>Total : {{ note.total() | euros }}</strong></p>
+
+    <button
+        type="button"
+        class="btn-success btn-lg"
+        [disabled]="note.lines().length === 0 || paying()"
+        (click)="payClicked.emit()"
+        >
+        Payer {{ note.total() | euros }}
+    </button>
 </div>
