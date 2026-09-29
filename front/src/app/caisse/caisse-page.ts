@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
-import { CATEGORIES, Formula, Order, Product } from '../models';
+import { CATEGORIES, DailyTotal, Formula, Order, Product } from '../models';
 import { CatalogService } from '../services/catalog.service';
 import { NoteService } from '../services/note.service';
 import { FormulaPicker } from './formula-picker';
@@ -9,9 +9,10 @@ import { ProductCard } from './product-card';
 import { EurosPipe } from '../shared/euros-pipe';
 import { OrderService } from '../services/order.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DailyTotals } from './daily-totals';
 
 @Component({
-  imports: [ProductCard, NotePanel, FormulaPicker, EurosPipe],
+  imports: [ProductCard, NotePanel, FormulaPicker, EurosPipe, DailyTotals],
   templateUrl: './caisse-page.html',
   styleUrl: './caisse-page.css',
 })
@@ -38,6 +39,7 @@ export class CaissePage {
       const order = await this.orders.pay(this.note.toOrderRequest());
       this.paidOrder.set(order);
       this.note.clear();
+      void this.loadDailyTotals();
     } catch (error) {
       this.paymentError.set(
         error instanceof HttpErrorResponse && error.error?.message
@@ -50,9 +52,22 @@ export class CaissePage {
     }
   }
 
+  protected readonly dailyTotals = signal<DailyTotal[]>([]);
+
+  protected readonly todayTotal = computed(() => {
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    return this.dailyTotals().find((t) => t.day === today)?.total ?? 0;
+  });
+
+  protected async loadDailyTotals(): Promise<void> {
+    this.dailyTotals.set(await this.orders.getDailyTotals());
+  }
+
   constructor() {
     void this.loadProducts();
     void this.loadFormulas();
+    void this.loadDailyTotals();
   }
 
   protected async loadProducts(): Promise<void> {

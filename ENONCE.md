@@ -327,12 +327,12 @@ limonades dans la note, payez 1 limonade depuis un second onglet, puis payez dan
 
 ### Étape 7 — Les recettes
 
-- [ ] Charger `GET /api/orders/daily-totals`.
-- [ ] Un composant **`DailyTotals`** : un tableau jour / nombre de notes / total, pour **chaque jour**
+- [X] Charger `GET /api/orders/daily-totals`.
+- [X] Un composant **`DailyTotals`** : un tableau jour / nombre de notes / total, pour **chaque jour**
   (la base de départ contient déjà l'historique des 3 jours précédents). La ligne du jour est mise en
   évidence.
-- [ ] Le **total du jour** est affiché en permanence dans l'en-tête de la caisse.
-- [ ] Les deux se mettent à jour après chaque paiement.
+- [X] Le **total du jour** est affiché en permanence dans l'en-tête de la caisse.
+- [X] Les deux se mettent à jour après chaque paiement.
 
 > 💡 `{{ day | date: 'EEEE d MMMM' }}` → « dimanche 27 septembre ».
 > Le total du jour est un `computed` sur la liste des totaux.
